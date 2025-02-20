@@ -1,12 +1,9 @@
 import { providers, utils, Wallet } from 'ethers';
 import dotenv from 'dotenv';
 import { DkaBridge, EthDepositMessageStatus, getDkargoNetwork } from '@dkargo/sdk';
-import { registerTestNetwork } from '../../../test/testHelper';
 dotenv.config();
 
 const main = async () => {
-  await registerTestNetwork();
-
   /**
    * Set up: instantiate wallets connected to providers
    */
