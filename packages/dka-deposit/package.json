@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dkargo/sdk": "file:../../../dkargo-sdk/dkargo-sdk-1.0.0.tgz",
     "dotenv": "^16.4.7"
   }
 }

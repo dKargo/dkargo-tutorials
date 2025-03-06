@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dkargo/sdk": "file:../dkargo-sdk/dkargo-sdk-1.0.0.tgz",
+    "@dkargo/sdk": "^1.0.0",
     "ethers": "^5.7.2"
   },
   "workspaces": {
