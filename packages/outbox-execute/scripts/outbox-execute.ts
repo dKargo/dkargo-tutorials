@@ -1,6 +1,7 @@
 import { providers, Wallet } from 'ethers';
 import dotenv from 'dotenv';
 import { ChildToParentMessageStatus, ChildTransactionReceipt } from '@dkargo/sdk';
+import { registerTestNetwork } from '../../../test/testHelper';
 dotenv.config();
 
 const main = async () => {
@@ -8,14 +9,24 @@ const main = async () => {
   /**
    * Set up: instantiate wallets connected to providers
    */
-  if (!process.env.PRIVATE_KEY) throw new Error('PRIVATE_KEY is required');
-  const walletPrivateKey = process.env.PRIVATE_KEY;
+  if (!process.env.PRIVATE_KEY) {
+    throw new Error(`The following environmental variables are required: PRIVATE_KEY`);
+  }
 
+  if (!process.env.ARB_CHAIN_RPC || !process.env.DKA_CHAIN_RPC) {
+    throw new Error(`The following environmental variables are required: ARB_CHAIN_RPC, DKA_CHAIN_RPC`);
+  }
+
+  const walletPrivateKey = process.env.PRIVATE_KEY;
   const arbProvider = new providers.JsonRpcProvider(process.env.ARB_CHAIN_RPC);
   const dkaProvider = new providers.JsonRpcProvider(process.env.DKA_CHAIN_RPC);
+  /**
+   * Only For register Local Test NetworkInfo
+   */
+  await registerTestNetwork(dkaProvider);
 
   const arbWallet = new Wallet(walletPrivateKey, arbProvider);
-
+  
   /**
    * We start with a transaction hash;
    * we assume this is a transaction that triggered a child-to-parent message on the dkargo chain (i.e., ArbSys.sendTxToL1)

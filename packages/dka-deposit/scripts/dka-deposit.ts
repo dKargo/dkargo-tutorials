@@ -1,6 +1,7 @@
 import { providers, utils, Wallet } from 'ethers';
 import dotenv from 'dotenv';
 import { DkaBridge, EthDepositMessageStatus, getDkargoNetwork } from '@dkargo/sdk';
+import { registerTestNetwork } from '../../../test/testHelper';
 dotenv.config();
 
 const main = async () => {
@@ -12,6 +13,11 @@ const main = async () => {
 
   const arbProvider = new providers.JsonRpcProvider(process.env.ARB_CHAIN_RPC);
   const dkaProvider = new providers.JsonRpcProvider(process.env.DKA_CHAIN_RPC);
+  
+  /**
+   * Only For register Local Test NetworkInfo
+   */
+  await registerTestNetwork(dkaProvider);
 
   const arbWallet = new Wallet(walletPrivateKey, arbProvider);
   const dkaWallet = new Wallet(walletPrivateKey, dkaProvider);
@@ -34,9 +40,8 @@ const main = async () => {
   const initDkaBalance = await dkaWallet.getBalance();
   const initArbDkaBalance = await dkaBridge.getParentDkaBalance(arbWallet.address, arbProvider);
 
-
   /**
-   * To transfer ERC20 DKA tokens held on L2 to the dKargo chain, 
+   * To transfer ERC20 DKA tokens held on L2 to the dKargo chain,
    * you must approve to Inbox Contract to access your DKA tokens.
    */
   const responseApprove = await dkaBridge.approveGasToken({
@@ -52,11 +57,11 @@ const main = async () => {
 
   /**
    * Transfer DKA token from arbitrum to dkargo chain
-   * This convenience method automatically queries for the retryable's max submission cost and forwards the appropriate amount to the child chain
+   * @dev If you want to generate data without sending a transaction, try using the `tokenBridge.getDepositRequest()` function
    */
   const responseDeposit = await dkaBridge.deposit({
     amount: depositAmount,
-    parentSigner:arbWallet
+    parentSigner: arbWallet,
   });
 
   const receipt = await responseDeposit.wait();
@@ -73,9 +78,17 @@ const main = async () => {
    * The `complete` boolean tells us if the cross-chain message was successful
    */
   if (transactionResult.complete) {
-    console.log(`Message successfully executed on the dkargo chain. Status: ${EthDepositMessageStatus[await transactionResult.message.status()]}`);
+    console.log(
+      `Message successfully executed on the dkargo chain. Status: ${
+        EthDepositMessageStatus[await transactionResult.message.status()]
+      }`
+    );
   } else {
-    throw new Error(`Message failed execution on the dkargo chain . Status ${EthDepositMessageStatus[await transactionResult.message.status()]}`);
+    throw new Error(
+      `Message failed execution on the dkargo chain . Status ${
+        EthDepositMessageStatus[await transactionResult.message.status()]
+      }`
+    );
   }
 
   /**
@@ -85,15 +98,15 @@ const main = async () => {
   const updatedArbDkaBalance = await dkaBridge.getParentDkaBalance(arbWallet.address, arbProvider);
 
   console.log(
-    ` ㄴ Your balance in the Arbitrum chain is updated from ${utils.formatEther(initArbDkaBalance.toString())} ArbDka(ERC20) to ${utils.formatEther(
-      updatedArbDkaBalance.toString()
-    )} ArbDka(ERC20)`
+    ` ㄴ Your balance in the Arbitrum chain is updated from ${utils.formatEther(
+      initArbDkaBalance.toString()
+    )} ArbDka(ERC20) to ${utils.formatEther(updatedArbDkaBalance.toString())} ArbDka(ERC20)`
   );
 
   console.log(
-    ` ㄴ Your balance in the Dkargo chain is updated from ${utils.formatEther(initDkaBalance.toString())} Dka to ${utils.formatEther(
-      updatedDkaBalance.toString()
-    )} Dka`
+    ` ㄴ Your balance in the Dkargo chain is updated from ${utils.formatEther(
+      initDkaBalance.toString()
+    )} Dka to ${utils.formatEther(updatedDkaBalance.toString())} Dka`
   );
 };
 

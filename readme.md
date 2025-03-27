@@ -25,4 +25,6 @@ npm install
 ## Tutorials lists
 - [Deposit DKA](./packages/dka-deposit/)
 - [Withdraw DKA](./packages/dka-withdraw/)
+- [Deposit erc20 token](./packages/erc20-deposit/)
+- [Withdraw erc20 token](./packages/erc20-withdraw/)
 - [Outbox tutorial: execute a child-to-parent message](./packages/outbox-execute/)

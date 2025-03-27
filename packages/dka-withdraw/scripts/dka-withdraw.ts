@@ -1,6 +1,7 @@
 import { providers, utils, Wallet } from 'ethers';
 import dotenv from 'dotenv';
 import { DkaBridge, getDkargoNetwork } from '@dkargo/sdk';
+import { registerTestNetwork } from '../../../test/testHelper';
 dotenv.config();
 
 const main = async () => {
@@ -15,6 +16,11 @@ const main = async () => {
 
   const arbWallet = new Wallet(walletPrivateKey, arbProvider);
   const dkaWallet = new Wallet(walletPrivateKey, dkaProvider);
+
+  /**
+   * Only For register Local Test NetworkInfo
+   */
+  await registerTestNetwork(dkaProvider);
 
   /**
    * Set the amount to be withdraw from the dkargo chain (in wei)
@@ -64,17 +70,17 @@ const main = async () => {
     console.log(`  - data : ${data}`);
     console.log();
   });
-  
+
   /**
    * Note that in principle, a single transaction could trigger any number of outgoing messages; the common case will be there's only one.
    * For the sake of this script, we assume there's only one, so we just grab the first one.
-  */
- const messages = await withdrawTransactionReceipt.getChildToParentMessages(arbWallet);
- const childToParentMessage = messages[0];
- 
- /**
+   */
+  const messages = await withdrawTransactionReceipt.getChildToParentMessages(arbWallet);
+  const childToParentMessage = messages[0];
+
+  /**
    * After a withdrawal request, ~6.4 days(challenge period) must pass before receiving DKA on L2, during which time the tokens remain in a pending state.
-   * 
+   *
    * Before we try to execute our message, we need to make sure the child chain's block is included and confirmed!
    * (it can only be confirmed after the dispute period)
    * Method `waitUntilReadyToExecute()` waits until the item outbox entry exists
