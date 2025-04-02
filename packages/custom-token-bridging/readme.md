@@ -1,8 +1,6 @@
-# Tutorial: ERC20 token withdraw
-`erc20-withdraw` shows how to move ERC20 token from the Dkargo chain to Arbitrum chain.<br/>
-Our Dkargo SDK provides a simply convenience method for withdraw erc20 token, abstracting away the need for the client to connect to any contracts manually.
-
-Note that this repo covers initiating a withdrawal. For a demo on releasing the funds from the Outbox, see [outbox-execute](../outbox-execute/)
+# Tutorial: Register custom ERC20 token
+`custom-token-bridging` shows how to register Custome ERC20 token to Gateway contract.<br/>
+Our Dkargo SDK provides a simply convenience method for depositing ERC20 token, abstracting away the need for the client to connect to any contracts manually.
 
 # Token Bridge
 The Arbitrum Chain (Layer 2, L2) hosts a variety of ERC-20 tokens, such as WETH and UNI.
@@ -14,6 +12,22 @@ It utilizes [Arbitrum's cross-chain messaging system (retryable tickets)](https:
 The dKargo Token Bridge is built on [Offchain Labs' Canonical Bridge](https://github.com/OffchainLabs/token-bridge-contracts), a well-established solution that has already bridged hundreds of ERC-20 tokens on Arbitrum, ensuring high security and seamless user experience.
 
 For info on how it works under the hood, see our [token bridging docs](https://docs.arbitrum.io/build-decentralized-apps/token-bridging/token-bridge-erc20).
+
+# Generic-custom Gateway
+For token movement between Arbitrumn and dKargo, the [`Standard Gateway`](../erc20-deposit/readme.md#standard-token-bridge) method is generally sufficient.
+
+However, in the Standard Gateway model:
+- When depositing tokens, an ERC-20 token contract on dKargo Chain is automatically deployed.
+- This contract is enforced to use [StandardArbERC20.sol](https://github.com/OffchainLabs/token-bridge-contracts/blob/main/contracts/tokenbridge/arbitrum/StandardArbERC20.sol), limiting customization.
+
+For developers or project builders who want:
+- To add custom functionalities to their ERC-20 contract
+- To pair their own ERC-20 contract on dKargo Chain with a specific contract
+
+Using the Generic-Custom Gateway provides greater flexibility in these cases.
+
+For info on how it works under the hood, see our [generic-custom gateway docs](https://docs.arbitrum.io/build-decentralized-apps/token-bridging/bridge-tokens-programmatically/how-to-bridge-tokens-generic-custom).
+
 
 > [!IMPORTANT]
 > The dKargo Token Bridge is a dApp built using [Arbitrum’s Retryable Ticket](https://docs.arbitrum.io/how-arbitrum-works/l1-to-l2-messaging#retryable-tickets) mechanism. A Retryable Ticket allows an L2 transaction to be generated and executed on L3. Through this mechanism, users can initiate L3 transactions directly from L2. The required transaction fees are paid in ERC-20 DKA on L2.
@@ -48,14 +62,11 @@ For info on how it works under the hood, see our [token bridging docs](https://d
     # @link. https://docs.dkargo.io/docs2-eng/run-dkargo-node/chain-rpc
     DKA_CHAIN_RPC=
 
-    # If an ERC20 contract has already been deployed on L2, please enter its address. 
-    # It just OPTIONAL parameter! If left empty, a DEMO ERC20 contract will be automatically deployed.
-    L2_ERC20_TOKEN_ADDRESS=
     ```
 
 2. **Run script**
     ```
-    ts-node ./scripts/erc20-withdraw.ts
+    ts-node ./scripts/register.ts
     ```
 
 

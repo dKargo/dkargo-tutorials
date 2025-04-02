@@ -25,7 +25,7 @@ Our Dkargo SDK provides a simply convenience method for depositing DKA token, ab
 
     # The Dkargo chain's RPC
     # For the public RPC URL, please refer to the official dKargo docs.
-    # @link. TODO
+    # @link. https://docs.dkargo.io/docs2-eng/run-dkargo-node/chain-rpc
     DKA_CHAIN_RPC=
     ```
 

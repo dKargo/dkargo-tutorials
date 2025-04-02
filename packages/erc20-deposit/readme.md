@@ -46,7 +46,7 @@ In this tutorial, we deploy a [demo token](./contracts/standard-token/Standard.s
 
     # The Dkargo chain's RPC
     # For the public RPC URL, please refer to the official dKargo docs.
-    # @link. TODO
+    # @link. https://docs.dkargo.io/docs2-eng/run-dkargo-node/chain-rpc
     DKA_CHAIN_RPC=
 
     # If an ERC20 contract has already been deployed on L2, please enter its address. 

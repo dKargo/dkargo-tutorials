@@ -27,7 +27,7 @@ The (expected) most-common use-case is withdrawals DKA, but the outbox handles a
 
     # The Dkargo chain's RPC
     # For the public RPC URL, please refer to the official dKargo docs.
-    # @link. TODO
+    # @link. https://docs.dkargo.io/docs2-eng/run-dkargo-node/chain-rpc
     DKA_CHAIN_RPC=
     ```
 
