@@ -1,8 +1,8 @@
 import { providers, utils, Wallet } from 'ethers';
 import dotenv from 'dotenv';
 import { getDkargoNetwork, ParentToChildMessageStatus, TokenBridge } from '@dkargo/sdk';
-import { ERC20Token, ERC20Token__factory } from '../build/types';
 import { registerTestNetwork } from '../../../test/testHelper';
+import { ERC20Token, ERC20Token__factory } from '../../erc20-withdraw/build/types';
 dotenv.config();
 
 const main = async () => {

@@ -13,7 +13,7 @@ const main = async () => {
 
   const arbProvider = new providers.JsonRpcProvider(process.env.ARB_CHAIN_RPC);
   const dkaProvider = new providers.JsonRpcProvider(process.env.DKA_CHAIN_RPC);
-  
+
   /**
    * Only For register Local Test NetworkInfo
    */
@@ -32,6 +32,7 @@ const main = async () => {
    * We'll use DkaBridge for its convenience methods around transferring the native asset to the dkargo chain
    */
   const network = await getDkargoNetwork(dkaProvider);
+
   const dkaBridge = new DkaBridge(network);
 
   /**

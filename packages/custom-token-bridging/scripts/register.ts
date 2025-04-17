@@ -57,7 +57,6 @@ const main = async () => {
   console.log(`ㄴ Demo custom token is deployed to the dkargo chain at ${childERC20.address}\n`);
   console.log(`ㄴ Demo custom token is deployed to the dkargo chain at ${childCustomGateway}\n`);
 
-  return
   /**
    * To register ERC20 tokens held on L2 to the dKargo chain,
    * you must approve to Inbox Contract to access your DKA tokens.
