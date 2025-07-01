@@ -25,7 +25,7 @@ const main = async () => {
   /**
    * Set the amount to be withdraw from the dkargo chain (in wei)
    */
-  const withdrawAmount = utils.parseEther('0.000001');
+  const withdrawAmount = utils.parseEther('1');
 
   /**
    * Use DkargoNetwork to create an Dkargo SDK DkaBridge instance

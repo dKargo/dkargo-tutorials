@@ -42,8 +42,8 @@ const main = async () => {
   const l2_erc20_factory = new L2TokenCustomGas__factory(arbWallet);
   console.log('Deploying the test Demo custom token to the arbitrum chain:');
   const parentERC20 = await l2_erc20_factory.deploy(
-    'CUSTOM_DEMO_TOKEN',
-    'CUSTOM',
+    'CUSTOM_CHoi_TOKEN',
+    'CUSTOM_CHoi',
     '100000000',
     parentCustomGateway,
     parentGatewayRouter
@@ -52,10 +52,9 @@ const main = async () => {
   console.log(`ㄴ Demo custom token is deployed to the arbitrum chain at ${parentERC20.address} \n`);
   console.log('Deploying the test Demo custom token to the dkargo chain:');
   const l3_erc20_factory = new L3Token__factory(dkaWallet);
-  const childERC20 = await l3_erc20_factory.deploy('CUSTOM_DEMO_TOKEN', 'CUSTOM', childCustomGateway, parentERC20.address);
+  const childERC20 = await l3_erc20_factory.deploy('CUSTOM_CHoi_TOKEN', 'CUSTOM_CHoi', childCustomGateway, parentERC20.address);
   await childERC20.deployed();
-  console.log(`ㄴ Demo custom token is deployed to the dkargo chain at ${childERC20.address}\n`);
-  console.log(`ㄴ Demo custom token is deployed to the dkargo chain at ${childCustomGateway}\n`);
+  console.log(`ㄴ Demo custom token is deployed to the dkargo chain at ${childERC20.address}`);
 
   /**
    * To register ERC20 tokens held on L2 to the dKargo chain,
@@ -74,7 +73,7 @@ const main = async () => {
     arbWallet.address,
     arbProvider
   );
-  console.log(` ㄴ Allowance DKA Token amount: ${allowanceGasToken}\n`);
+  console.log(` ㄴ Allowance DKA Token amount: ${allowanceGasToken}`);
 
   /**
    * Register custom token on our custom gateway

@@ -1,22 +1,24 @@
 {
   "name": "dkargo-tutorials",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tutorial dkargo sdk for developing on Dkargo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stress": "ts-node ./test/stress.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dkargo/sdk": "^1.0.2",
+    "@dkargo/sdk": "^1.1.1",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^4.8.3",
     "@typechain/ethers-v5": "^10.0.0",
     "@typechain/hardhat": "^6.0.0",
     "ethers": "^5.7.2",
-    "hardhat": "^2.22.19"
+    "hardhat": "^2.22.19",
+    "yargs": "^17.7.2"
   },
   "workspaces": {
     "packages": [
@@ -24,6 +26,7 @@
     ]
   },
   "devDependencies": {
+    "@types/yargs": "^17.0.33",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }

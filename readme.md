@@ -1,7 +1,7 @@
 # Dkargo Tutorials
 
 
-![npm](https://img.shields.io/badge/@dkargo/sdk-1.0.0-blue)
+![npm](https://img.shields.io/badge/@dkargo/sdk-1.1.1-blue)
 ![npm](https://img.shields.io/badge/ethers-5.7.2-black)
 
 <div align="center">

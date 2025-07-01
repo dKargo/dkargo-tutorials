@@ -31,8 +31,7 @@ const main = async () => {
    * Use DkargoNetwork to create an Dkargo SDK DkaBridge instance
    * We'll use DkaBridge for its convenience methods around transferring the native asset to the dkargo chain
    */
-  const network = await getDkargoNetwork(dkaProvider);
-
+  const network = await getDkargoNetwork(dkaProvider);  
   const dkaBridge = new DkaBridge(network);
 
   /**

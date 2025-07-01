@@ -1,7 +1,6 @@
 import { providers, utils, Wallet } from 'ethers';
 import dotenv from 'dotenv';
-import { getDkargoNetwork, ParentToChildMessageStatus, TokenBridge } from '@dkargo/sdk';
-import { registerTestNetwork } from '../../../test/testHelper';
+import { getArbitrumNetwork, getDkargoNetwork, ParentToChildMessageStatus, TokenBridge } from '@dkargo/sdk';
 import { ERC20Token, ERC20Token__factory } from '../../erc20-withdraw/build/types';
 dotenv.config();
 
@@ -23,7 +22,7 @@ const main = async () => {
   /**
    * Only For register Local Test NetworkInfo
    */
-  await registerTestNetwork(dkaProvider);
+  // await registerTestNetwork(dkaProvider);
 
   const arbWallet = new Wallet(walletPrivateKey, arbProvider);
   const dkaWallet = new Wallet(walletPrivateKey, dkaProvider);
@@ -32,8 +31,8 @@ const main = async () => {
    * Use DkargoNetwork to create an Dkargo SDK TokenBridge instance
    * We'll use TokenBridge for its convenience methods around transferring the ERC20 Token asset to the dkargo chain
    */
-    const network = await getDkargoNetwork(dkaProvider);
-    const tokenBridge = new TokenBridge(network);
+  const network = await getDkargoNetwork(dkaProvider);
+  const tokenBridge = new TokenBridge(network);
 
     
   /**
@@ -47,7 +46,7 @@ const main = async () => {
     console.log('Deploying the test Demo token to the arbitrum chain:');
 
     const erc20_factory = new ERC20Token__factory(arbWallet);
-    arbERC20 = await erc20_factory.deploy('Demo Token', 'DEMO', '100000000');
+    arbERC20 = await erc20_factory.deploy('CHoi Token', 'CHoi', '100000000');
     await arbERC20.deployed();
     console.log(`ㄴ Demo token is deployed to the arbitrum chain at ${arbERC20.address}`);
   }
@@ -55,7 +54,7 @@ const main = async () => {
   /**
    * Set the amount to be deposited in the dka chain (in wei)
    */
-  const depositAmount = utils.parseEther('1');
+  const depositAmount = utils.parseEther('100');
 
   /**
    * To transfer ERC20 tokens held on L2 to the dKargo chain,
@@ -64,7 +63,6 @@ const main = async () => {
   const responseApproveGasToken = await tokenBridge.approveGasToken({
     erc20ParentAddress: arbERC20.address,
     parentSigner: arbWallet,
-    amount: depositAmount,
   });
 
   const approveGasTokenReceipt = await responseApproveGasToken.wait();
@@ -80,7 +78,6 @@ const main = async () => {
   const responseApproveERC20Token = await tokenBridge.approveToken({
     erc20ParentAddress: arbERC20.address,
     parentSigner: arbWallet,
-    amount: depositAmount,
   });
 
   const approveERC20Receipt = await responseApproveERC20Token.wait();
@@ -137,6 +134,7 @@ const main = async () => {
     arbProvider,
     dkaProvider
   );
+
 
   console.log(` ㄴ Your balance in the Dkargo chain is updated ${utils.formatEther(updatedArbDkaBalance.toString())} Token`);
 };
