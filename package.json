@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dkargo/sdk": "^1.1.1",
+    "@dkargo/sdk": "^1.2.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@openzeppelin/contracts": "^4.8.3",
     "@typechain/ethers-v5": "^10.0.0",
